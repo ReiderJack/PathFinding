@@ -12,11 +12,14 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -49,8 +52,9 @@
 
         <DataGrid Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2"
                   AutoGenerateColumns="False"
-                  SelectedIndex="{Binding Path=SelectedIndex}"
-                  x:Name="SelectedNode_Connections">
+                  Name ="myDataGrid"
+                  SelectedIndex="{Binding Path=SelectedIndex, Mode=TwoWay}"
+                  ItemsSource="{Binding Path=SelectedNode.Connections}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Target" Binding="{Binding Path=Target.NodeName}"/>
                 <DataGridTextColumn Header="Distance" Binding="{Binding Path=Distance}"/>
@@ -58,9 +62,16 @@
         </DataGrid>
 
         <Button Grid.Row ="7" Grid.Column="1" Grid.ColumnSpan="2"
+                Content="Remove Connection" x:Name="RemoveConnection" />
+        <StackPanel Grid.Row ="8" Grid.Column="1" Grid.ColumnSpan="4" Orientation="Horizontal">
+            <TextBlock>Name</TextBlock>
+            <TextBox x:Name="NewConnectionTargetName"></TextBox>
+            <TextBlock>Distance</TextBlock>
+            <TextBox x:Name="NewConnectionDistance"/>
+        </StackPanel>
+        <Button Grid.Row ="9" Grid.Column="1" Grid.ColumnSpan="2"
                 Content="Add Connection" x:Name="AddNewConnection" />
         
-        <Button Grid.Row ="8" Grid.Column="1" Grid.ColumnSpan="2"
-                Content="Remove Connection" x:Name="RemoveConnection" />
+        
     </Grid>
 </UserControl>

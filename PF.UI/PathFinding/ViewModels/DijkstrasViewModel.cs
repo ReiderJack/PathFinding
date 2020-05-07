@@ -2,13 +2,16 @@
 using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows.Data;
 
 namespace PathFinding.ViewModels
 {
     public class DijkstrasViewModel : Screen
     {
+        
         public BindableCollection<Node> NodesGraph { get; set; }
 
         private Node _selectedNode;
@@ -35,18 +38,6 @@ namespace PathFinding.ViewModels
             }
         }
 
-        private NodeConnection _selectedConnection;
-
-        public NodeConnection SelectedConnection
-        {
-            get { return _selectedConnection; }
-            set 
-            {
-                if (value == null) return;
-                _selectedConnection = value;
-                NotifyOfPropertyChange(() => SelectedConnection);
-            }
-        }
         private int _selectedIndex;
 
         public int SelectedIndex
@@ -58,6 +49,31 @@ namespace PathFinding.ViewModels
                 NotifyOfPropertyChange(() => SelectedIndex);
             }
         }
+
+        private string _newConnectionTargetName;
+
+        public string NewConnectionTargetName
+        {
+            get { return _newConnectionTargetName; }
+            set 
+            {
+                _newConnectionTargetName = value;
+                NotifyOfPropertyChange(() => NewConnectionTargetName);
+            }
+        }
+
+        private double _newConnectionDistance;
+
+        public double NewConnectionDistance
+        {
+            get { return _newConnectionDistance; }
+            set 
+            { 
+                _newConnectionDistance = value;
+                NotifyOfPropertyChange(() => NewConnectionDistance);
+            }
+        }
+
 
         public DijkstrasViewModel()
         {
@@ -138,13 +154,17 @@ namespace PathFinding.ViewModels
 
         public void AddNewConnection()
         {
-            NodesGraph.First().AddConnection(NodesGraph.ElementAt(2),12,false);
+            if (SelectedNode == null) return;
+            if (String.IsNullOrWhiteSpace(NewConnectionTargetName)) return;
+            if (NewConnectionDistance <= 0) return;
+            Node chosenNode = NodesGraph.First(n => n.NodeName == NewConnectionTargetName);
+            SelectedNode.AddConnection(chosenNode, NewConnectionDistance, false);
         }
 
         public void RemoveConnection()
         {
             if (SelectedNode == null) return;
-            if (SelectedNode.Connections.Count() == 0) return;
+            if (SelectedIndex >= SelectedNode.Connections.Count()) return;
             SelectedNode.Connections.RemoveAt(SelectedIndex);
         }
     }
