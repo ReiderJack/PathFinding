@@ -1,5 +1,6 @@
 using Algorithms.Dijkstras;
 using NUnit.Framework;
+using System.Linq;
 
 namespace Tests
 {
@@ -68,6 +69,18 @@ namespace Tests
             var distances = calculator.CalculateDistancesDijkstra(graph, "G");
 
             Assert.Pass();
+        }
+
+        [Test]
+        public void Test_RemoveConnection()
+        {
+            Node node0 = new Node("0");
+            Node node1 = new Node("1");
+            node0.AddConnection(node1, 13, false);
+
+            node0.RemoveConnection(node0.Connections.First());
+
+            Assert.That(node0.Connections.Count(), Is.EqualTo(0));
         }
     }
 }

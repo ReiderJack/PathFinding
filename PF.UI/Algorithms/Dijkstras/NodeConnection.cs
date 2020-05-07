@@ -9,7 +9,7 @@ namespace Algorithms.Dijkstras
     public class NodeConnection
     {
         public Node Target { get; private set; }
-        public double Distance { get; private set; }
+        public double Distance { get; set; }
 
         public NodeConnection(Node target, double distance)
         {

@@ -8,7 +8,7 @@ namespace Algorithms.Dijkstras
 {
     public class DistanceCalculator
     {
-        public IDictionary<string, double> CalculateDistancesDijkstra(Graph graph, string startingNode)
+        public Dictionary<string, double> CalculateDistancesDijkstra(Graph graph, string startingNode)
         {
             if (!graph.Nodes.Any(n => n.Key == startingNode))
                 throw new ArgumentException("Starting node must be in graph.");
@@ -55,7 +55,7 @@ namespace Algorithms.Dijkstras
             }
         }
 
-        private IDictionary<string, double> ExtractDistances(Graph graph)
+        private Dictionary<string, double> ExtractDistances(Graph graph)
         {
             return graph.Nodes.ToDictionary(n => n.Key, n => n.Value.DistanceFromStart);
         }

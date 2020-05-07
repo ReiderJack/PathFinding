@@ -8,13 +8,13 @@ namespace Algorithms.Dijkstras
 {
     public class Node
     {
-        IList<NodeConnection> _connections;
+        List<NodeConnection> _connections;
 
         public string NodeName { get; set; }
 
         public double DistanceFromStart { get; set; }
 
-        public IEnumerable<NodeConnection> Connections
+        public List<NodeConnection> Connections
         {
             get { return _connections; }
         }
@@ -33,6 +33,24 @@ namespace Algorithms.Dijkstras
 
             _connections.Add(new NodeConnection(targetNode, distance));
             if (twoWay) targetNode.AddConnection(this, distance, false);
+        }
+
+        public void RemoveConnection(Node targetNode)
+        {
+            if (targetNode == null) return;
+            if (_connections.Any(c => c.Target == targetNode))
+            {
+                _connections.Remove(_connections.Find(c => c.Target == targetNode));
+            }
+        }
+
+        public void RemoveConnection(NodeConnection connection)
+        {
+            if (connection == null) return;
+            if (_connections.Contains(connection))
+            {
+                _connections.Remove(connection);
+            }
         }
     }
 }

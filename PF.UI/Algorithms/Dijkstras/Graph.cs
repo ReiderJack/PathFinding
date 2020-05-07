@@ -8,7 +8,7 @@ namespace Algorithms.Dijkstras
 {
     public class Graph
     {
-        public IDictionary<string, Node> Nodes { get; private set; }
+        public Dictionary<string, Node> Nodes { get; private set; }
 
         public Graph()
         {

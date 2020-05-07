@@ -21,6 +21,10 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
@@ -43,5 +47,20 @@
         <Button Grid.Row ="4" Grid.Column="1" Grid.ColumnSpan="2"
                 Content="Add Node" x:Name="AddNode" />
 
+        <DataGrid Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                  AutoGenerateColumns="False"
+                  SelectedIndex="{Binding Path=SelectedIndex}"
+                  x:Name="SelectedNode_Connections">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Target" Binding="{Binding Path=Target.NodeName}"/>
+                <DataGridTextColumn Header="Distance" Binding="{Binding Path=Distance}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row ="7" Grid.Column="1" Grid.ColumnSpan="2"
+                Content="Add Connection" x:Name="AddNewConnection" />
+        
+        <Button Grid.Row ="8" Grid.Column="1" Grid.ColumnSpan="2"
+                Content="Remove Connection" x:Name="RemoveConnection" />
     </Grid>
 </UserControl>
