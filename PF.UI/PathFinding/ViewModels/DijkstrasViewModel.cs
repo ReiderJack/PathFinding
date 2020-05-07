@@ -1,11 +1,107 @@
-﻿using Caliburn.Micro;
+﻿using Algorithms.Dijkstras;
+using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PathFinding.ViewModels
 {
     public class DijkstrasViewModel : Screen
     {
+        public BindableCollection<Node> NodesGraph { get; set; }
+
+        private Node _selectedNode;
+
+        public Node SelectedNode
+        {
+            get { return _selectedNode; }
+            set 
+            {
+                _selectedNode = value;
+                NotifyOfPropertyChange(() => SelectedNode);
+            }
+        }
+
+        private string _newNodeName;
+
+        public string NewNodeName 
+        { 
+            get => _newNodeName;
+            set
+            {
+                _newNodeName = value;
+                NotifyOfPropertyChange(() => NewNodeName);
+            }
+        }
+
+        public bool DoesGraphHaveNode(Node node)
+        {
+            if(NodesGraph.Any(n => n.NodeName == node.NodeName))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool DoesGraphHaveNode(string node)
+        {
+            if (NodesGraph.Any(n => n.NodeName == node))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public DijkstrasViewModel()
+        {
+            NodesGraph = new BindableCollection<Node>()
+            {
+              new Node("A"),
+              new Node("B"),
+              new Node("C"),
+              new Node("D"),
+              new Node("E"),
+              new Node("F")
+            };
+        }
+
+        public void AddNode()
+        {
+            if(String.IsNullOrWhiteSpace(_newNodeName) 
+                || DoesGraphHaveNode(_newNodeName))
+            {
+                return;
+            }
+            else
+            {
+                NodesGraph.Add(new Node(_newNodeName));
+                NewNodeName = null;
+            }
+        }
+
+        public void RemoveNode()
+        {
+            if (NodesGraph.Contains(SelectedNode))
+            {
+                NodesGraph.Remove(SelectedNode);
+            }
+        }
+
+        public void AddNewConnection()
+        {
+
+        }
+
+        public void RemoveConnection()
+        {
+
+        }
     }
 }

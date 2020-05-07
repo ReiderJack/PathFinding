@@ -4,6 +4,17 @@
     "D:\\PathFinding\\PF.UI\\PathFinding\\PathFinding.csproj": {}
   },
   "projects": {
+    "D:\\PathFinding\\PF.UI\\Algorithms\\Algorithms.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\PathFinding\\PF.UI\\Algorithms\\Algorithms.csproj",
+        "projectName": "Algorithms",
+        "projectPath": "D:\\PathFinding\\PF.UI\\Algorithms\\Algorithms.csproj"
+      },
+      "frameworks": {
+        "net472": {}
+      }
+    },
     "D:\\PathFinding\\PF.UI\\PathFinding\\PathFinding.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -26,7 +37,11 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\PathFinding\\PF.UI\\Algorithms\\Algorithms.csproj": {
+                "projectPath": "D:\\PathFinding\\PF.UI\\Algorithms\\Algorithms.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

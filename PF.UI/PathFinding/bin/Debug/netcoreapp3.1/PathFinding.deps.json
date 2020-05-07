@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v3.1": {
       "PathFinding/1.0.0": {
         "dependencies": {
+          "Algorithms": "1.0.0",
           "Caliburn.Micro": "3.2.0"
         },
         "runtime": {
@@ -40,6 +41,11 @@
             "fileVersion": "3.2.0.0"
           }
         }
+      },
+      "Algorithms/1.0.0": {
+        "runtime": {
+          "Algorithms.exe": {}
+        }
       }
     }
   },
@@ -62,6 +68,11 @@
       "sha512": "sha512-jmpC4OSvejrrIlcSmlzFjtyOmHQBrKgqJ9hy/LeWGoytct0e2b+TVgzWHTtvkzBF6TWWYlWCNErF10O6hNoL0g==",
       "path": "caliburn.micro.core/3.2.0",
       "hashPath": "caliburn.micro.core.3.2.0.nupkg.sha512"
+    },
+    "Algorithms/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

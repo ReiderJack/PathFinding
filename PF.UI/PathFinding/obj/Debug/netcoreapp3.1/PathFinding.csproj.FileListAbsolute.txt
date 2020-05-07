@@ -28,3 +28,6 @@ D:\PathFinding\PF.UI\PathFinding\obj\Debug\netcoreapp3.1\Views\FloydWarshallView
 D:\PathFinding\PF.UI\PathFinding\obj\Debug\netcoreapp3.1\Views\BellmanFordView.baml
 D:\PathFinding\PF.UI\PathFinding\obj\Debug\netcoreapp3.1\Views\DijkstrasView.baml
 D:\PathFinding\PF.UI\PathFinding\obj\Debug\netcoreapp3.1\Views\FloydWarshallView.baml
+D:\PathFinding\PF.UI\PathFinding\bin\Debug\netcoreapp3.1\Algorithms.exe
+D:\PathFinding\PF.UI\PathFinding\bin\Debug\netcoreapp3.1\Algorithms.pdb
+D:\PathFinding\PF.UI\PathFinding\bin\Debug\netcoreapp3.1\Algorithms.exe.config

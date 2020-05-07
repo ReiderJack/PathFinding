@@ -1,0 +1,6 @@
+D:\PathFinding\PF.UI\Algorithms\obj\Debug\Algorithms.csprojAssemblyReference.cache
+D:\PathFinding\PF.UI\Algorithms\bin\Debug\Algorithms.exe.config
+D:\PathFinding\PF.UI\Algorithms\bin\Debug\Algorithms.exe
+D:\PathFinding\PF.UI\Algorithms\bin\Debug\Algorithms.pdb
+D:\PathFinding\PF.UI\Algorithms\obj\Debug\Algorithms.exe
+D:\PathFinding\PF.UI\Algorithms\obj\Debug\Algorithms.pdb

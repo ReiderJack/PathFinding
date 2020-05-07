@@ -26,6 +26,15 @@
         "runtime": {
           "lib/net45/Caliburn.Micro.dll": {}
         }
+      },
+      "Algorithms/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Algorithms.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Algorithms.dll": {}
+        }
       }
     }
   },
@@ -113,10 +122,16 @@
         "lib/sl5/Caliburn.Micro.XML",
         "lib/sl5/Caliburn.Micro.dll"
       ]
+    },
+    "Algorithms/1.0.0": {
+      "type": "project",
+      "path": "../Algorithms/Algorithms.csproj",
+      "msbuildProject": "../Algorithms/Algorithms.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "Algorithms >= 1.0.0",
       "Caliburn.Micro >= 3.2.0"
     ]
   },
@@ -145,7 +160,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\PathFinding\\PF.UI\\Algorithms\\Algorithms.csproj": {
+              "projectPath": "D:\\PathFinding\\PF.UI\\Algorithms\\Algorithms.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
