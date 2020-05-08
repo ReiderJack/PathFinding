@@ -157,7 +157,7 @@ namespace PathFinding.ViewModels
             if (SelectedNode == null) return;
             if (String.IsNullOrWhiteSpace(NewConnectionTargetName)) return;
             if (SelectedNode.Connections.Any(c => c.Target.NodeName == NewConnectionTargetName)) return;
-            if (NewConnectionDistance <= 0) return;
+            if (NewConnectionDistance < 0) return;
             if (!NodesGraph.Any(n => n.NodeName == NewConnectionTargetName)) return;
             Node chosenNode = NodesGraph.First(n => n.NodeName == NewConnectionTargetName);
             SelectedNode.AddConnection(chosenNode, NewConnectionDistance, false);
