@@ -13,7 +13,22 @@ namespace PathFinding.ViewModels
     {
         public BindableCollection<BindableCollection<Node>> DefaultGraphs { get; set; }
 
-        public BindableCollection<Node> NodesGraph { get; set; }
+        private BindableCollection<Node> _nodesGraph;
+
+        public BindableCollection<Node> NodesGraph
+        {
+            get => _nodesGraph;
+
+            set
+            {
+                if(_nodesGraph == null)
+                {
+                    new BindableCollection<Node>();
+                }
+                _nodesGraph = value;
+                NotifyOfPropertyChange(() => NodesGraph);
+            }
+        }
 
         private Node _selectedNode;
 
@@ -78,7 +93,7 @@ namespace PathFinding.ViewModels
 
         public DijkstrasViewModel()
         {
-            NodesGraph = new BindableCollection<Node>()
+            NodesGraph = new BindableCollection<Node>();/*
             {
               new Node("A"),
               new Node("B"),
@@ -100,7 +115,7 @@ namespace PathFinding.ViewModels
             NodesGraph.Add(node0);
             NodesGraph.Add(node1);
             NodesGraph.Add(nodeO);
-            NodesGraph.Add(nodeP);
+            NodesGraph.Add(nodeP);*/
 
             DefaultGraphs = new BindableCollection<BindableCollection<Node>>();
 

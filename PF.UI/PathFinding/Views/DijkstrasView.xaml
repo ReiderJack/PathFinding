@@ -31,6 +31,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
@@ -76,7 +78,15 @@
         
         <Button Grid.Row ="12" Grid.Column="1" Grid.ColumnSpan="2"
                 Content="Add Connection" x:Name="AddNewConnection" />
-        
-        
+
+        <ComboBox Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="2"
+                  x:Name="DefaultGraphs"
+                  SelectedItem="{Binding NodesGraph}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="Graph" Grid.ColumnSpan="2"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
     </Grid>
 </UserControl>
