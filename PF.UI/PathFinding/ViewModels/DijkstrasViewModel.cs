@@ -11,7 +11,8 @@ namespace PathFinding.ViewModels
 {
     public class DijkstrasViewModel : Screen
     {
-        
+        public BindableCollection<BindableCollection<Node>> DefaultGraphs { get; set; }
+
         public BindableCollection<Node> NodesGraph { get; set; }
 
         private Node _selectedNode;
@@ -100,6 +101,66 @@ namespace PathFinding.ViewModels
             NodesGraph.Add(node1);
             NodesGraph.Add(nodeO);
             NodesGraph.Add(nodeP);
+
+            DefaultGraphs = new BindableCollection<BindableCollection<Node>>();
+
+            DefaultGraphs.Add(FillFirstDefaultGraph());
+        }
+        private BindableCollection<Node> FillFirstDefaultGraph()
+        {
+            var graph = new BindableCollection<Node>()
+            {
+                new Node("A"),
+                new Node("B"),
+                new Node("C"),
+                new Node("D"),
+                new Node("E"),
+                new Node("F"),
+                new Node("G"),
+                new Node("H"),
+                new Node("I"),
+                new Node("J"),
+                new Node("Z"),
+            };
+
+            graph[0].AddConnection(GetNodeByName(graph,"B"), 14, true);
+            graph[0].AddConnection(GetNodeByName(graph, "C"), 10, true);
+            graph[0].AddConnection(GetNodeByName(graph, "D"), 14, true);
+            graph[0].AddConnection(GetNodeByName(graph, "E"), 21, true);
+
+            graph[1].AddConnection(GetNodeByName(graph, "C"), 9, true);
+            graph[1].AddConnection(GetNodeByName(graph, "E"), 10, true);
+            graph[1].AddConnection(GetNodeByName(graph, "F"), 14, true);
+
+            graph[2].AddConnection(GetNodeByName(graph, "D"), 9, false);
+
+            // From D
+            graph[3].AddConnection(GetNodeByName(graph, "G"), 10, false);
+
+            // From E
+            graph[4].AddConnection(GetNodeByName(graph, "H"), 11, true);
+
+            // From F
+            graph[5].AddConnection(GetNodeByName(graph, "C"), 10, false);
+            graph[5].AddConnection(GetNodeByName(graph, "H"), 10, true);
+            graph[5].AddConnection(GetNodeByName(graph, "I"), 9, true);
+
+            // From G
+            graph[6].AddConnection(GetNodeByName(graph, "F"), 8, false);
+            graph[6].AddConnection(GetNodeByName(graph, "I"), 9, true);
+
+            // From H
+            graph[7].AddConnection(GetNodeByName(graph, "J"), 9, true);
+
+            // From I
+            graph[8].AddConnection(GetNodeByName(graph, "J"), 10, true);
+
+            return graph;
+        }
+
+        private Node GetNodeByName(BindableCollection<Node> graph, string name)
+        {
+            return graph.FirstOrDefault(n => n.NodeName == name);
         }
 
         public bool DoesGraphHaveNode(Node node)
