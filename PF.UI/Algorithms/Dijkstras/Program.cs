@@ -44,12 +44,42 @@ namespace Algorithms.Dijkstras
             graph.AddConnection("H", "J", 9, true);
             graph.AddConnection("I", "J", 10, true);
 
-            var calculator = new DistanceCalculator();
-            var distances = calculator.CalculateDistancesDijkstra(graph.Nodes.Values, "G");  // Start from "G"
+            Graph graph1 = new Graph();
 
-            foreach (var d in distances)
+            graph1.AddNode("A");
+            graph1.AddNode("B");
+            graph1.AddNode("D");
+            graph1.AddNode("C");
+
+            graph1.AddConnection("A", "C", -2, false);
+            graph1.AddConnection("C", "D", 2, false);
+            graph1.AddConnection("B", "C", 3, false);
+            graph1.AddConnection("B", "A", 4, false);
+            graph1.AddConnection("D", "B", -1, false);
+
+            foreach (var node in graph1.Nodes.Values)
+            {
+                Console.WriteLine(node.NodeName);
+                foreach (var con in node.Connections)
+                {
+                    Console.WriteLine("{0}, {1}", con.Target.NodeName, con.Distance);
+                }
+            }
+            Console.WriteLine("Calculated graph");
+            var calculator = new DistanceCalculator();
+            var distances = calculator.FloyadCalculate(graph1.Nodes.Values);  // Start from "G"
+
+            /*foreach (var d in distances)
             {
                 Console.WriteLine("{0}, {1}", d.NodeName, d.DistanceFromStart);
+            }*/
+            foreach (var node in distances)
+            {
+                Console.WriteLine(node.NodeName);
+                foreach (var con in node.Connections)
+                {
+                    Console.WriteLine("{0}, {1}", con.Target.NodeName, con.Distance);
+                }
             }
             Console.Read();
         }

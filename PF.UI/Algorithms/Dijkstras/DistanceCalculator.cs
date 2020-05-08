@@ -61,15 +61,16 @@ namespace Algorithms.Dijkstras
             return graph.ToDictionary(n => n.NodeName, n => n.DistanceFromStart);
         }
 
-        public List<Node> FloyadCalculate(Graph graph)
+        public List<Node> FloyadCalculate(ICollection<Node> graph)
         {
             List<Node> newListOfNodes = new List<Node>();
-            var graphListNodes = graph.Nodes.Values.ToList();
+            var graphListNodes = graph.ToList();
             foreach (var node in graphListNodes)
             {
                 newListOfNodes.Add(FloyadFillNodeWithConnections(node, graphListNodes));
             }
-            return new List<Node>();
+            graphListNodes = graphListNodes.OrderBy(n => n.NodeName).ToList();
+            return FloyadCalculateDistances(graphListNodes);
         }
 
         public Node FloyadFillNodeWithConnections(Node newNode, List<Node> listOfNodes)
@@ -88,25 +89,30 @@ namespace Algorithms.Dijkstras
                     }
                 }
             }
+            newNode.Connections = newNode.Connections.OrderBy(c => c.Target.NodeName).ToList();
             return newNode;
         }
 
-        private List<Node> FloyadCalculateDistances(List<Node> listOfNodes)
+        private List<Node> FloyadCalculateDistances(List<Node> nodes)
         {
-            for (int i = 0; i < listOfNodes.Count; i++)
+            for (int k = 0; k < nodes.Count; k++)
             {
-                foreach (var node in listOfNodes)
+                for (int i = 0; i < nodes.Count; i++)
                 {
-                    foreach (var connection in node.Connections)
+                    for (int j = 0; j < nodes.Count; j++)
                     {
-                        foreach (var con in connection.Target.Connections)
+                        if(nodes[i].Connections[j].Distance 
+                            > nodes[i].Connections[k].Distance 
+                                + nodes[k].Connections[j].Distance)
                         {
-                            /*connection.Distance > con.Distance + connection.Distance*/
+                            nodes[i].Connections[j].Distance
+                                = nodes[i].Connections[k].Distance
+                                    + nodes[k].Connections[j].Distance;
                         }
                     }
                 }
             }
-            return new List<Node>();
+            return nodes;
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Algorithms.Dijkstras
         public List<NodeConnection> Connections
         {
             get { return _connections; }
+            set { _connections = value; }
         }
 
         public Node(string name)
