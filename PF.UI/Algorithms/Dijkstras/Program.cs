@@ -45,7 +45,7 @@ namespace Algorithms.Dijkstras
             graph.AddConnection("I", "J", 10, true);
 
             var calculator = new DistanceCalculator();
-            var distances = calculator.CalculateDistancesDijkstra(graph, "G");  // Start from "G"
+            var distances = calculator.CalculateDistancesDijkstra(graph.Nodes.Values, "G");  // Start from "G"
 
             foreach (var d in distances)
             {

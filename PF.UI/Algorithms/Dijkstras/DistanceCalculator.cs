@@ -8,9 +8,9 @@ namespace Algorithms.Dijkstras
 {
     public class DistanceCalculator
     {
-        public Dictionary<string, double> CalculateDistancesDijkstra(Graph graph, string startingNode)
+        public Dictionary<string, double> CalculateDistancesDijkstra(ICollection<Node> graph, string startingNode)
         {
-            if (!graph.Nodes.Any(n => n.Key == startingNode))
+            if (!graph.Any(n => n.NodeName == startingNode))
                 throw new ArgumentException("Starting node must be in graph.");
 
             InitialiseGraph(graph, startingNode);
@@ -18,17 +18,18 @@ namespace Algorithms.Dijkstras
             return ExtractDistances(graph);
         }
 
-        private void InitialiseGraph(Graph graph, string startingNode)
+        private void InitialiseGraph(ICollection<Node> graph, string startingNode)
         {
-            foreach (Node node in graph.Nodes.Values)
+            var listNodes = graph.ToList();
+            foreach (Node node in listNodes)
                 node.DistanceFromStart = double.PositiveInfinity;
-            graph.Nodes[startingNode].DistanceFromStart = 0;
+            listNodes.First(n => n.NodeName == startingNode).DistanceFromStart = 0;
         }
 
-        private void ProcessGraph(Graph graph, string startingNode)
+        private void ProcessGraph(ICollection<Node> graph, string startingNode)
         {
             bool finished = false;
-            var queue = graph.Nodes.Values.ToList();
+            var queue = graph.ToList();
             while (!finished)
             {
                 Node nextNode = queue.OrderBy(n => n.DistanceFromStart).FirstOrDefault(n => !double.IsPositiveInfinity(n.DistanceFromStart));
@@ -55,23 +56,23 @@ namespace Algorithms.Dijkstras
             }
         }
 
-        private Dictionary<string, double> ExtractDistances(Graph graph)
+        private Dictionary<string, double> ExtractDistances(ICollection<Node> graph)
         {
-            return graph.Nodes.ToDictionary(n => n.Key, n => n.Value.DistanceFromStart);
+            return graph.ToDictionary(n => n.NodeName, n => n.DistanceFromStart);
         }
 
-        public List<Node> CalculateFloyad(Graph graph)
+        public List<Node> FloyadCalculate(Graph graph)
         {
             List<Node> newListOfNodes = new List<Node>();
             var graphListNodes = graph.Nodes.Values.ToList();
             foreach (var node in graphListNodes)
             {
-                newListOfNodes.Add(FillNodeWithConnections(node, graphListNodes));
+                newListOfNodes.Add(FloyadFillNodeWithConnections(node, graphListNodes));
             }
             return new List<Node>();
         }
 
-        public Node FillNodeWithConnections(Node newNode, List<Node> listOfNodes)
+        public Node FloyadFillNodeWithConnections(Node newNode, List<Node> listOfNodes)
         {
             foreach (var node in listOfNodes)
             {
@@ -90,7 +91,7 @@ namespace Algorithms.Dijkstras
             return newNode;
         }
 
-        private List<Node> CalculateDistances(List<Node> listOfNodes)
+        private List<Node> FloyadCalculateDistances(List<Node> listOfNodes)
         {
             for (int i = 0; i < listOfNodes.Count; i++)
             {

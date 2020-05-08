@@ -66,7 +66,7 @@ namespace Tests
             graph.AddConnection("I", "J", 10, true);
 
             var calculator = new DistanceCalculator();
-            var distances = calculator.CalculateDistancesDijkstra(graph, "G");
+            var distances = calculator.CalculateDistancesDijkstra(graph.Nodes.Values, "G");
 
             Assert.Pass();
         }
