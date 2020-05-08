@@ -21,10 +21,13 @@
             <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -43,14 +46,14 @@
 
         <Button Grid.Row ="2" Grid.Column="1" Grid.ColumnSpan="2"
                 Content="Remove Node" x:Name="RemoveNode" />
-        
-        <TextBox Grid.Row="3" Grid.Column="1"
+
+        <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
                    x:Name="NewNodeName" />
 
-        <Button Grid.Row ="4" Grid.Column="1" Grid.ColumnSpan="2"
+        <Button Grid.Row ="5" Grid.Column="1" Grid.ColumnSpan="2"
                 Content="Add Node" x:Name="AddNode" />
 
-        <DataGrid Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2"
+        <DataGrid Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2"
                   AutoGenerateColumns="False"
                   Name ="myDataGrid"
                   SelectedIndex="{Binding Path=SelectedIndex, Mode=TwoWay}"
@@ -61,15 +64,17 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Grid.Row ="7" Grid.Column="1" Grid.ColumnSpan="2"
+        <Button Grid.Row ="8" Grid.Column="1" Grid.ColumnSpan="2"
                 Content="Remove Connection" x:Name="RemoveConnection" />
-        <StackPanel Grid.Row ="8" Grid.Column="1" Grid.ColumnSpan="4" Orientation="Horizontal">
-            <TextBlock>Name</TextBlock>
+        
+        <StackPanel Grid.Row ="11" Grid.Column="1" Grid.ColumnSpan="4" Orientation="Vertical">
+            <TextBlock>Target</TextBlock>
             <TextBox x:Name="NewConnectionTargetName"></TextBox>
             <TextBlock>Distance</TextBlock>
             <TextBox x:Name="NewConnectionDistance"/>
         </StackPanel>
-        <Button Grid.Row ="9" Grid.Column="1" Grid.ColumnSpan="2"
+        
+        <Button Grid.Row ="12" Grid.Column="1" Grid.ColumnSpan="2"
                 Content="Add Connection" x:Name="AddNewConnection" />
         
         
