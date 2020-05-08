@@ -45,11 +45,11 @@ namespace Algorithms.Dijkstras
             graph.AddConnection("I", "J", 10, true);
 
             var calculator = new DistanceCalculator();
-            var distances = calculator.CalculateDistancesDijkstra(graph.Nodes.Values, "A");  // Start from "G"
+            var distances = calculator.CalculateDistancesDijkstra(graph.Nodes.Values, "G");  // Start from "G"
 
             foreach (var d in distances)
             {
-                Console.WriteLine("{0}, {1}", d.Key, d.Value);
+                Console.WriteLine("{0}, {1}", d.NodeName, d.DistanceFromStart);
             }
             Console.Read();
         }

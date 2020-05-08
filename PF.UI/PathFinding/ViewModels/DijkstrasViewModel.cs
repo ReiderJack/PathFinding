@@ -30,6 +30,23 @@ namespace PathFinding.ViewModels
             }
         }
 
+        private BindableCollection<Node> _calculationResult;
+
+        public BindableCollection<Node> CalculationResult
+        {
+            get => _calculationResult;
+
+            set
+            {
+                if (_calculationResult == null)
+                {
+                    new BindableCollection<Node>();
+                }
+                _calculationResult = value;
+                NotifyOfPropertyChange(() => CalculationResult);
+            }
+        }
+
         private Node _selectedNode;
 
         public Node SelectedNode
@@ -89,7 +106,6 @@ namespace PathFinding.ViewModels
                 NotifyOfPropertyChange(() => NewConnectionDistance);
             }
         }
-
 
         public DijkstrasViewModel()
         {
@@ -221,6 +237,16 @@ namespace PathFinding.ViewModels
             if (SelectedNode == null) return;
             if (SelectedIndex >= SelectedNode.Connections.Count()) return;
             SelectedNode.Connections.RemoveAt(SelectedIndex);
+        }
+
+        public void CalculateDijkstra()
+        {
+            if (NodesGraph.Count() == 0) return;
+            var newResultGraph = NodesGraph;
+            CalculationResult = null;
+            var calculator = new DistanceCalculator();
+
+            CalculationResult = (BindableCollection<Node>)calculator.CalculateDistancesDijkstra(newResultGraph, SelectedNode.NodeName); ;
         }
     }
 }

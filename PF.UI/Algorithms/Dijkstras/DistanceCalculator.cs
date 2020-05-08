@@ -8,14 +8,14 @@ namespace Algorithms.Dijkstras
 {
     public class DistanceCalculator
     {
-        public Dictionary<string, double> CalculateDistancesDijkstra(ICollection<Node> graph, string startingNode)
+        public ICollection<Node> CalculateDistancesDijkstra(ICollection<Node> graph, string startingNode)
         {
             if (!graph.Any(n => n.NodeName == startingNode))
                 throw new ArgumentException("Starting node must be in graph.");
 
             InitialiseGraph(graph, startingNode);
             ProcessGraph(graph, startingNode);
-            return ExtractDistances(graph);
+            return graph;
         }
 
         private void InitialiseGraph(ICollection<Node> graph, string startingNode)

@@ -35,6 +35,9 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -99,6 +102,19 @@
         <Button Grid.Row ="16" Grid.Column="1" Grid.ColumnSpan="2"
                 Content="Add Connection" x:Name="AddNewConnection" />
 
+        <Button Grid.Row ="18" Grid.Column="1" Grid.ColumnSpan="2"
+                x:Name="CalculateDijkstra" Content="Calculate"/>
+        <TextBlock Grid.Row ="19" Grid.Column="1" Grid.ColumnSpan="2"
+                   Text="Result"/>
         
+        <DataGrid Grid.Row="20" Grid.Column="1" Grid.ColumnSpan="2"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding Path=CalculationResult}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Target" Binding="{Binding Path=NodeName}"/>
+                <DataGridTextColumn Header="Distance" Binding="{Binding Path=DistanceFromStart}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+           
     </Grid>
 </UserControl>
