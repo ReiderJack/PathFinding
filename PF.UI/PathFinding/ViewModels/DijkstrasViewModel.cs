@@ -93,34 +93,11 @@ namespace PathFinding.ViewModels
 
         public DijkstrasViewModel()
         {
-            NodesGraph = new BindableCollection<Node>();/*
-            {
-              new Node("A"),
-              new Node("B"),
-              new Node("C"),
-              new Node("D"),
-              new Node("E"),
-              new Node("F")
-            };
-            
-            var nodeO = new Node("O");
-            var nodeP = new Node("P");
-            var node1 = new Node("T");
-
-            var node0 = new Node("G");
-            node0.AddConnection(node1, 23, false);
-            node0.AddConnection(nodeO, 11, false);
-            node0.AddConnection(nodeP, 100, false);
-
-            NodesGraph.Add(node0);
-            NodesGraph.Add(node1);
-            NodesGraph.Add(nodeO);
-            NodesGraph.Add(nodeP);*/
-
             DefaultGraphs = new BindableCollection<BindableCollection<Node>>();
 
             DefaultGraphs.Add(FillFirstDefaultGraph());
         }
+
         private BindableCollection<Node> FillFirstDefaultGraph()
         {
             var graph = new BindableCollection<Node>()
