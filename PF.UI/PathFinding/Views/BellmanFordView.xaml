@@ -113,10 +113,10 @@
 
         <DataGrid Grid.Row="3" Grid.Column="9" Grid.ColumnSpan="2" Grid.RowSpan="10"
                   AutoGenerateColumns="False"
-                  ItemsSource="{Binding Path=CalculationResult}">
+                  ItemsSource="{Binding Path=CalculationResult.Connections}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Target" Binding="{Binding Path=NodeName}"/>
-                <DataGridTextColumn Header="Distance" Binding="{Binding Path=DistanceFromStart}"/>
+                <DataGridTextColumn Header="Target" Binding="{Binding Path=Target.NodeName}"/>
+                <DataGridTextColumn Header="Distance" Binding="{Binding Path=Distance}"/>
             </DataGrid.Columns>
         </DataGrid>
 

@@ -289,6 +289,7 @@ namespace PathFinding.ViewModels
 
             CalculationResult = ConvertListToCollection(calculator.FloyadCalculate(newResultGraph));
         }
+
         private BindableCollection<Node> ConvertListToCollection(List<Node> list)
         {
             var col = new BindableCollection<Node>();

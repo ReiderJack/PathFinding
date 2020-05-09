@@ -28,9 +28,9 @@ namespace PathFinding.ViewModels
             }
         }
 
-        private BindableCollection<Node> _calculationResult;
+        private Node _calculationResult;
 
-        public BindableCollection<Node> CalculationResult
+        public Node CalculationResult
         {
             get => _calculationResult;
 
@@ -271,11 +271,11 @@ namespace PathFinding.ViewModels
         public void CalculateBellman()
         {
             if (NodesGraph.Count() == 0) return;
-            var newResultGraph = NodesGraph;
+            var newResultGraph = NodesGraph.ToList();
             CalculationResult = null;
             var calculator = new DistanceCalculator();
 
-            CalculationResult = (BindableCollection<Node>)calculator.CalculateDistancesDijkstra(newResultGraph, SelectedNode.NodeName);
+            CalculationResult = calculator.BellmanFordCalculateDistances(newResultGraph, SelectedNode.NodeName);
         }
     }
 }

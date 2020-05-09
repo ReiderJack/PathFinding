@@ -156,7 +156,8 @@ namespace Algorithms.Dijkstras
             {
                 for (int j = 0; j < edgesCount; ++j)
                 {
-                    /*int u = graph.edge[j].Source;
+                    /*nodes[j].Connections[j]
+                    int u = graph.edge[j].Source;
                     int v = graph.edge[j].Destination;
                     int weight = graph.edge[j].Weight;
 
