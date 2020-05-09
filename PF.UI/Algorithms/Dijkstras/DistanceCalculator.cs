@@ -79,7 +79,7 @@ namespace Algorithms.Dijkstras
             Node nodeToAdd = new Node(newNode.NodeName);
             foreach (var con in newNode.Connections)
             {
-                nodeToAdd.Connections.Add(con);
+                nodeToAdd.Connections.Add(new NodeConnection(con.Target,con.Distance));
             }
             foreach (var node in listOfNodes)
             {

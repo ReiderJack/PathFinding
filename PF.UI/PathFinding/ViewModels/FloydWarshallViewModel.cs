@@ -122,6 +122,8 @@ namespace PathFinding.ViewModels
             DefaultGraphs = new BindableCollection<BindableCollection<Node>>();
 
             DefaultGraphs.Add(FillFirstDefaultGraph());
+
+            DefaultGraphs.Add(FillSecondDefaultGraph());
         }
 
         private BindableCollection<Node> FillFirstDefaultGraph()
@@ -172,6 +174,35 @@ namespace PathFinding.ViewModels
 
             // From I
             graph[8].AddConnection(GetNodeByName(graph, "J"), 10, true);
+
+            return graph;
+        }
+
+        private BindableCollection<Node> FillSecondDefaultGraph()
+        {
+            var graph = new BindableCollection<Node>()
+            {
+                new Node("A"),
+                new Node("B"),
+                new Node("C"),
+                new Node("D"),
+                new Node("E"),
+                new Node("S"),
+            };
+
+            graph[0].AddConnection(GetNodeByName(graph, "C"), 2, false);
+
+            graph[1].AddConnection(GetNodeByName(graph, "A"), 1, false);
+
+            graph[2].AddConnection(GetNodeByName(graph, "B"), -2, false);
+
+            graph[3].AddConnection(GetNodeByName(graph, "C"), -1, false);
+            graph[3].AddConnection(GetNodeByName(graph, "A"), -4, false);
+
+            graph[4].AddConnection(GetNodeByName(graph, "D"), 1, false);
+
+            graph[5].AddConnection(GetNodeByName(graph, "A"), 10, false);
+            graph[5].AddConnection(GetNodeByName(graph, "E"), 8, false);
 
             return graph;
         }
