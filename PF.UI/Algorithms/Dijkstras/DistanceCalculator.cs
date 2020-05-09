@@ -120,5 +120,51 @@ namespace Algorithms.Dijkstras
             }
             return nodes;
         }
+
+        // Bellmmn-Ford
+
+        public Node BellmanFordCalculateDistances(List<Node> nodes, string startingNode)
+        {
+            Node resultNode = new Node(startingNode);
+            var graphListNodes = nodes.OrderBy(n => n.NodeName).ToList();
+            int edgesCount = 0;
+            foreach (var node in graphListNodes)
+            {
+                node.Connections = node.Connections.OrderBy(n => n.Target.NodeName).ToList();
+                foreach (var con in node.Connections)
+                {
+                    edgesCount++;
+                }
+            }
+            
+            foreach (var node in nodes)
+            {
+                if (node.NodeName == resultNode.NodeName)
+                {
+                    foreach (var con in node.Connections)
+                    {
+                        resultNode.AddConnection(con.Target, con.Distance, false);
+                    }
+                }
+                if(resultNode.Connections.Any(c => c.Target.NodeName != node.NodeName))
+                {
+                    resultNode.AddConnection(new Node(node.NodeName),double.PositiveInfinity, false);
+                }
+            }
+            resultNode.Connections = resultNode.Connections.OrderBy(n => n.Target.NodeName).ToList();
+            for(int i = 0; i < nodes.Count - 1; i++)
+            {
+                for (int j = 0; j < edgesCount; ++j)
+                {
+                    /*int u = graph.edge[j].Source;
+                    int v = graph.edge[j].Destination;
+                    int weight = graph.edge[j].Weight;
+
+                    if (distance[u] != int.MaxValue && distance[u] + weight < distance[v])
+                        distance[v] = distance[u] + weight;*/
+                }
+            }
+            return resultNode;
+        }
     }
 }

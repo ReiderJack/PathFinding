@@ -4,9 +4,121 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PathFinding.Views"
-             mc:Ignorable="d" Background="Red"
+             mc:Ignorable="d" Background="LightGray"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="1" Grid.Column="1"
+                   Text="Default Graphs"/>
+
+        <ComboBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                  x:Name="DefaultGraphs"
+                  SelectedItem="{Binding NodesGraph}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="Default" Grid.ColumnSpan="2"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <TextBlock Grid.Row="4" Grid.Column="1"
+                   Text="Nodes"/>
+        <ComboBox Grid.Row="5" Grid.Column="1" 
+                  x:Name="NodesGraph" 
+                  SelectedItem="{Binding SelectedNode}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding NodeName}" Grid.ColumnSpan="2"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Button Grid.Row ="6" Grid.Column="1" Grid.ColumnSpan="2"
+                Content="Remove Node" x:Name="RemoveNode" />
+
+        <TextBox Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2"
+                   x:Name="NewNodeName" />
+
+        <Button Grid.Row ="9" Grid.Column="1" Grid.ColumnSpan="2"
+                Content="Add Node" x:Name="AddNode" />
+
+        <DataGrid Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2"
+                  AutoGenerateColumns="False"
+                  Name ="myDataGrid"
+                  SelectedIndex="{Binding Path=SelectedIndex, Mode=TwoWay}"
+                  ItemsSource="{Binding Path=SelectedNode.Connections}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Target" Binding="{Binding Path=Target.NodeName}"/>
+                <DataGridTextColumn Header="Distance" Binding="{Binding Path=Distance}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row ="12" Grid.Column="1" Grid.ColumnSpan="2"
+                Content="Remove Connection" x:Name="RemoveConnection" />
+
+        <StackPanel Grid.Row ="15" Grid.Column="1" Grid.ColumnSpan="4" Orientation="Vertical">
+            <TextBlock>Target</TextBlock>
+            <TextBox x:Name="NewConnectionTargetName"></TextBox>
+            <TextBlock>Distance</TextBlock>
+            <TextBox x:Name="NewConnectionDistance"/>
+        </StackPanel>
+
+        <Button Grid.Row ="16" Grid.Column="1" Grid.ColumnSpan="2"
+                Content="Add Connection" x:Name="AddNewConnection" />
+
+        <Button Grid.Row ="1" Grid.Column="9" Grid.ColumnSpan="2"
+                x:Name="CalculateBellman" Content="Calculate"/>
+        <TextBlock Grid.Row ="2" Grid.Column="9" Grid.ColumnSpan="2"
+                   Text="Result"/>
+
+        <DataGrid Grid.Row="3" Grid.Column="9" Grid.ColumnSpan="2" Grid.RowSpan="10"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding Path=CalculationResult}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Target" Binding="{Binding Path=NodeName}"/>
+                <DataGridTextColumn Header="Distance" Binding="{Binding Path=DistanceFromStart}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </UserControl>
