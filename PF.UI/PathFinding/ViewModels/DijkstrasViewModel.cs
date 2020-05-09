@@ -246,7 +246,7 @@ namespace PathFinding.ViewModels
             CalculationResult = null;
             var calculator = new DistanceCalculator();
 
-            CalculationResult = (BindableCollection<Node>)calculator.CalculateDistancesDijkstra(newResultGraph, SelectedNode.NodeName); ;
+            CalculationResult = (BindableCollection<Node>)calculator.CalculateDistancesDijkstra(newResultGraph, SelectedNode.NodeName);
         }
     }
 }

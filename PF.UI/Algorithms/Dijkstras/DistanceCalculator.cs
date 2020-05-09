@@ -69,8 +69,8 @@ namespace Algorithms.Dijkstras
             {
                 newListOfNodes.Add(FloyadFillNodeWithConnections(node, graphListNodes));
             }
-            graphListNodes = graphListNodes.OrderBy(n => n.NodeName).ToList();
-            return FloyadCalculateDistances(graphListNodes);
+            newListOfNodes = newListOfNodes.OrderBy(n => n.NodeName).ToList();
+            return FloyadCalculateDistances(newListOfNodes);
         }
 
         public Node FloyadFillNodeWithConnections(Node newNode, List<Node> listOfNodes)

@@ -57,17 +57,17 @@ namespace Algorithms.Dijkstras
             graph1.AddConnection("B", "A", 4, false);
             graph1.AddConnection("D", "B", -1, false);
 
-            foreach (var node in graph1.Nodes.Values)
+            /*foreach (var node in graph1.Nodes.Values)
             {
                 Console.WriteLine(node.NodeName);
                 foreach (var con in node.Connections)
                 {
                     Console.WriteLine("{0}, {1}", con.Target.NodeName, con.Distance);
                 }
-            }
+            }*/
             Console.WriteLine("Calculated graph");
             var calculator = new DistanceCalculator();
-            var distances = calculator.FloyadCalculate(graph1.Nodes.Values);  // Start from "G"
+            var distances = calculator.FloyadCalculate(graph.Nodes.Values);  // Start from "G"
 
             /*foreach (var d in distances)
             {
