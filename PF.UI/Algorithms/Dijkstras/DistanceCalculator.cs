@@ -61,6 +61,7 @@ namespace Algorithms.Dijkstras
             return graph.ToDictionary(n => n.NodeName, n => n.DistanceFromStart);
         }
 
+        // Floyad related
         public List<Node> FloyadCalculate(ICollection<Node> graph)
         {
             List<Node> newListOfNodes = new List<Node>();
@@ -75,22 +76,27 @@ namespace Algorithms.Dijkstras
 
         public Node FloyadFillNodeWithConnections(Node newNode, List<Node> listOfNodes)
         {
+            Node nodeToAdd = new Node(newNode.NodeName);
+            foreach (var con in newNode.Connections)
+            {
+                nodeToAdd.Connections.Add(con);
+            }
             foreach (var node in listOfNodes)
             {
-                if (!newNode.Connections.Any(n => n.Target == node))
+                if (!nodeToAdd.Connections.Any(n => n.Target.NodeName == node.NodeName))
                 {
-                    if (newNode == node)
+                    if (nodeToAdd.NodeName == node.NodeName)
                     {
-                        newNode.AddConnection(node, 0, false);
+                        nodeToAdd.AddConnection(node, 0, false);
                     }
                     else
                     {
-                        newNode.AddConnection(node, double.PositiveInfinity, false);
+                        nodeToAdd.AddConnection(node, double.PositiveInfinity, false);
                     }
                 }
             }
-            newNode.Connections = newNode.Connections.OrderBy(c => c.Target.NodeName).ToList();
-            return newNode;
+            nodeToAdd.Connections = nodeToAdd.Connections.OrderBy(c => c.Target.NodeName).ToList();
+            return nodeToAdd;
         }
 
         private List<Node> FloyadCalculateDistances(List<Node> nodes)
