@@ -141,28 +141,27 @@ namespace Algorithms.Dijkstras
             {
                 if (node.NodeName == resultNode.NodeName)
                 {
-                    foreach (var con in node.Connections)
-                    {
-                        resultNode.AddConnection(con.Target, con.Distance, false);
-                    }
+                    resultNode.AddConnection(new Node(node.NodeName), 0, false);
                 }
-                if(resultNode.Connections.Any(c => c.Target.NodeName != node.NodeName))
+                else
                 {
-                    resultNode.AddConnection(new Node(node.NodeName),double.PositiveInfinity, false);
+                    resultNode.AddConnection(new Node(node.NodeName), double.PositiveInfinity, false);
                 }
             }
             resultNode.Connections = resultNode.Connections.OrderBy(n => n.Target.NodeName).ToList();
-            for(int i = 0; i < nodes.Count - 1; i++)
+            for (int i = 0; i < nodes.Count - 1; i++)
             {
-                for (int j = 0; j < edgesCount; ++j)
+                foreach (var node in graphListNodes)
                 {
-                    /*nodes[j].Connections[j]
-                    int u = graph.edge[j].Source;
-                    int v = graph.edge[j].Destination;
-                    int weight = graph.edge[j].Weight;
-
-                    if (distance[u] != int.MaxValue && distance[u] + weight < distance[v])
-                        distance[v] = distance[u] + weight;*/
+                    foreach (var con in node.Connections)
+                    {
+                        if(resultNode.Connections.First(n => n.Target.NodeName == con.Target.NodeName).Distance
+                            > (con.Distance + resultNode.Connections.First(n => n.Target.NodeName == node.NodeName).Distance))
+                            {
+                            resultNode.Connections.First(n => n.Target.NodeName == con.Target.NodeName).Distance
+                                = con.Distance + resultNode.Connections.First(n => n.Target.NodeName == node.NodeName).Distance;
+                            }
+                    }
                 }
             }
             return resultNode;
