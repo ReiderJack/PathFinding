@@ -12,11 +12,11 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="10"/>
@@ -100,7 +100,7 @@
         <Button Grid.Row ="12" Grid.Column="1" Grid.ColumnSpan="2"
                 Content="Remove Connection" x:Name="RemoveConnection" />
 
-        <StackPanel Grid.Row ="15" Grid.Column="1" Grid.ColumnSpan="4" Orientation="Vertical">
+        <StackPanel Grid.Row ="15" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Vertical">
             <TextBlock>Target</TextBlock>
             <TextBox x:Name="NewConnectionTargetName"></TextBox>
             <TextBlock>Distance</TextBlock>
@@ -124,5 +124,10 @@
             </DataGrid.Columns>
         </DataGrid>
 
+        <Button Grid.Row ="18" Grid.Column="1" Grid.ColumnSpan="2"
+                x:Name="OpenGraph" Content="Draw"/>
+        <Canvas Grid.Row="2" Grid.Column="6" 
+                Grid.ColumnSpan="2" Grid.RowSpan="19"
+                Background="White"></Canvas>
     </Grid>
 </UserControl>

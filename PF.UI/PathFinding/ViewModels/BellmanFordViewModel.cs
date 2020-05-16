@@ -2,6 +2,7 @@
 using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -279,5 +280,11 @@ namespace PathFinding.ViewModels
 
             CalculationResult = calculator.BellmanFordCalculateDistances(newResultGraph, SelectedNode.NodeName);
         }
+
+        public void OpenGraph()
+        {
+            Process.Start("D:/QT_graph/Graf.exe");
+        }
+
     }
 }
