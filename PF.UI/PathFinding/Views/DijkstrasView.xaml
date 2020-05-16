@@ -48,6 +48,10 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
+        <TextBlock Grid.Row="1" Grid.Column="4"
+                   Grid.ColumnSpan="4"
+                   Text="Dijkstra" FontWeight="Black" HorizontalAlignment="Center"/>
+
         <TextBlock Grid.Row="1" Grid.Column="1"
                    Text="Default Graphs"/>
 

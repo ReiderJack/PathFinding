@@ -270,6 +270,8 @@ namespace PathFinding.ViewModels
 
         public void CalculateBellman()
         {
+            if (SelectedNode == null) return;
+            if (NodesGraph == null) return;
             if (NodesGraph.Count() == 0) return;
             var newResultGraph = NodesGraph.ToList();
             CalculationResult = null;
