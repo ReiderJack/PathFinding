@@ -126,8 +126,109 @@
 
         <Button Grid.Row ="18" Grid.Column="1" Grid.ColumnSpan="2"
                 x:Name="OpenGraph" Content="Draw"/>
-        <Canvas Grid.Row="2" Grid.Column="6" 
-                Grid.ColumnSpan="2" Grid.RowSpan="21"
-                Background="White"></Canvas>
+        <!--
+        Canvas for Nodes
+        -->
+
+        <ItemsControl ItemsSource="{Binding LinesData}"
+                Grid.Row="2" Grid.Column="6" 
+                Grid.ColumnSpan="2" Grid.RowSpan="21">
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas   Background="White"></Canvas>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Grid>
+                            <Line X1="{Binding Path=Point1.X}" Y1="{Binding Path=Point1.Y}"
+                                  X2="{Binding Path=Point2.X}" Y2="{Binding Path=Point2.Y}"
+                                  Stroke="Black"
+                                  StrokeThickness="1"/>
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+        </ItemsControl>
+
+        <ItemsControl ItemsSource="{Binding NodesGraphCoord}"
+                Grid.Row="2" Grid.Column="6" 
+                Grid.ColumnSpan="2" Grid.RowSpan="21">
+            
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Grid>
+                            <Ellipse Fill="Blue" Width="30" Height="30"
+                                     Margin="{Binding Offset}" Opacity="1"/>
+                            <TextBlock Text="{Binding Path=Node.NodeName}" Margin="{Binding Offset}"
+                                       FontWeight="Black" TextAlignment="Center"/>
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter
+                        Property="Canvas.Left"
+                        Value="{Binding X}"
+                        />
+                    <Setter
+                        Property="Canvas.Top"
+                        Value="{Binding Y}"
+                        />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+
+        
+
+        <ItemsControl ItemsSource="{Binding LinesData}"
+                Grid.Row="2" Grid.Column="6" 
+                Grid.ColumnSpan="2" Grid.RowSpan="21">
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Grid>
+                            <TextBlock Text="{Binding ConnectionDistance}" 
+                                       FontWeight="Black" TextAlignment="Center" />
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter
+                        Property="Canvas.Left"
+                        Value="{Binding Path=DistanceCoordinate.X}"
+                        />
+                    <Setter
+                        Property="Canvas.Top"
+                        Value="{Binding Path=DistanceCoordinate.Y}"
+                        />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+        </ItemsControl>
+
     </Grid>
 </UserControl>

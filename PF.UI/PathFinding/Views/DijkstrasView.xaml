@@ -125,6 +125,8 @@
         </DataGrid>
         <Canvas Grid.Row="2" Grid.Column="6" 
                 Grid.ColumnSpan="2" Grid.RowSpan="21"
-                Background="White"></Canvas>
+                Background="White" x:Name="MainCanvas">
+            
+        </Canvas>
     </Grid>
 </UserControl>

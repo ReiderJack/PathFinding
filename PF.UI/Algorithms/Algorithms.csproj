@@ -35,13 +35,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Compile Include="Dijkstras\DistanceCalculator.cs" />
     <Compile Include="Dijkstras\Graph.cs" />
     <Compile Include="Dijkstras\Node.cs" />
     <Compile Include="Dijkstras\NodeConnection.cs" />
+    <Compile Include="Dijkstras\NodeCoordinate.cs" />
     <Compile Include="Dijkstras\Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -26,6 +26,41 @@ namespace PathFinding.ViewModels
                 }
                 _nodesGraph = value;
                 NotifyOfPropertyChange(() => NodesGraph);
+                FillCanvasGraph();
+                FillLinesData();
+            }
+        }
+
+        private BindableCollection<NodeCoordinate> _nodesGraphCoord;
+
+        public BindableCollection<NodeCoordinate> NodesGraphCoord
+        {
+            get => _nodesGraphCoord;
+
+            set
+            {
+                if (_nodesGraphCoord == null)
+                {
+                    _nodesGraphCoord = new BindableCollection<NodeCoordinate>();
+                }
+                _nodesGraphCoord = value;
+                NotifyOfPropertyChange(() => NodesGraphCoord);
+            }
+        }
+
+        private BindableCollection<LineData> _linesData;
+
+        public BindableCollection<LineData> LinesData 
+        {
+            get => _linesData;
+            set
+            {
+                if(_linesData == null)
+                {
+                    _linesData = new BindableCollection<LineData>();
+                }
+                _linesData = value;
+                NotifyOfPropertyChange(() => LinesData);
             }
         }
 
@@ -195,10 +230,44 @@ namespace PathFinding.ViewModels
 
             return graph;
         }
-
+        
         private Node GetNodeByName(BindableCollection<Node> graph, string name)
         {
             return graph.FirstOrDefault(n => n.NodeName == name);
+        }
+
+        private void FillCanvasGraph()
+        {
+            if (NodesGraph.Count == 0) return;
+            int step = 360/NodesGraph.Count;
+            
+            var canvasGraph = new BindableCollection<NodeCoordinate>();
+            for (int i = 0; i < NodesGraph.Count; i++)
+            {
+                var coordinate = pov(new Coordinate(400,400), 0 + step * i, 200);
+                canvasGraph.Add(new NodeCoordinate(NodesGraph[i], coordinate.X, coordinate.Y));
+            }
+            NodesGraphCoord = canvasGraph;
+        }
+
+        private void FillLinesData()
+        {
+            if (NodesGraphCoord.Count == 0) return;
+            var linesData = new BindableCollection<LineData>();
+            foreach (var node in NodesGraphCoord)
+            {
+                foreach (var connection in node.Node.Connections)
+                {
+                    var nodePoint1 = new Coordinate(node.X, node.Y);
+
+                    var targetNodeCoords = NodesGraphCoord.FirstOrDefault(n => n.Node.NodeName == connection.Target.NodeName);
+                    var nodePoint2 = new Coordinate(targetNodeCoords.X, targetNodeCoords.Y);
+
+                    linesData.Add(new LineData(nodePoint1, nodePoint2, connection.Distance));
+                }
+            }
+
+            LinesData = linesData;
         }
 
         public bool DoesGraphHaveNode(Node node)
@@ -283,7 +352,88 @@ namespace PathFinding.ViewModels
 
         public void OpenGraph()
         {
-            Process.Start("D:/QT_graph/Graf.exe");
+            Process.Start("C:/Users/Jack/Desktop/release/releaseee/gg.exe");
+        }
+
+        public Coordinate pov(Coordinate p, int angle, int width)
+        {
+            int ang = 0;
+            while (angle < 0)
+                angle += 360;
+            angle = angle % 360;
+
+            Coordinate e = p;
+
+            if (angle >= 0 && angle <= 90)
+                ang = angle;
+            if (angle > 90 && angle <= 180)
+                ang = 180 - angle;
+            if (angle > 180 && angle <= 270)
+                ang = angle - 180;
+            if (angle > 270 && angle <= 360)
+                ang = 360 - angle;
+
+            double ax = Math.Sin(ang * 0.0175);
+            double ay = Math.Cos(ang * 0.0175);
+
+            if (angle >= 0 && angle <= 90)
+            {
+                e.X = (p.X + (int)(ax * width));
+                e.Y = (p.Y - (int)(ay * width));
+            }
+            if (angle > 90 && angle <= 180)
+            {
+                e.X = (p.X + (int)(ax * width));
+                e.Y = (p.Y + (int)(ay * width));
+            }
+            if (angle > 180 && angle <= 270)
+            {
+                e.X = (p.X - (int)(ax * width));
+                e.Y = (p.Y + (int)(ay * width));
+            }
+            if (angle > 270 && angle <= 360)
+            {
+                e.X = (p.X - (int)(ax * width));
+                e.Y = (p.Y - (int)(ay * width));
+            }
+
+            return e;
+        }
+    }
+
+    public class Coordinate
+    {
+        public float X { get; set; }
+        public float Y { get; set; }
+        public Coordinate()
+        {
+
+        }
+        public Coordinate(float x, float y)
+        {
+            X = x;
+            Y = y;
+        }
+    }
+
+    public class LineData
+    {
+        public Coordinate Point1 { get; set; }
+        public Coordinate Point2 { get; set; }
+        public double ConnectionDistance { get; set; }
+        public Coordinate DistanceCoordinate { get; set; }
+
+
+        public LineData()
+        {
+               
+        }
+        public LineData(Coordinate point1, Coordinate point2, double distance)
+        {
+            Point1 = point1;
+            Point2 = point2;
+            ConnectionDistance = distance;
+            DistanceCoordinate = new Coordinate((Point2.X + Point1.X) / 2, (Point2.Y +Point1.Y) /2);
         }
 
     }
