@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace PathFinding.ViewModels
 {
@@ -236,39 +237,7 @@ namespace PathFinding.ViewModels
             return graph.FirstOrDefault(n => n.NodeName == name);
         }
 
-        private void FillCanvasGraph()
-        {
-            if (NodesGraph.Count == 0) return;
-            int step = 360/NodesGraph.Count;
-            
-            var canvasGraph = new BindableCollection<NodeCoordinate>();
-            for (int i = 0; i < NodesGraph.Count; i++)
-            {
-                var coordinate = pov(new Coordinate(400,400), 0 + step * i, 200);
-                canvasGraph.Add(new NodeCoordinate(NodesGraph[i], coordinate.X, coordinate.Y));
-            }
-            NodesGraphCoord = canvasGraph;
-        }
-
-        private void FillLinesData()
-        {
-            if (NodesGraphCoord.Count == 0) return;
-            var linesData = new BindableCollection<LineData>();
-            foreach (var node in NodesGraphCoord)
-            {
-                foreach (var connection in node.Node.Connections)
-                {
-                    var nodePoint1 = new Coordinate(node.X, node.Y);
-
-                    var targetNodeCoords = NodesGraphCoord.FirstOrDefault(n => n.Node.NodeName == connection.Target.NodeName);
-                    var nodePoint2 = new Coordinate(targetNodeCoords.X, targetNodeCoords.Y);
-
-                    linesData.Add(new LineData(nodePoint1, nodePoint2, connection.Distance));
-                }
-            }
-
-            LinesData = linesData;
-        }
+        
 
         public bool DoesGraphHaveNode(Node node)
         {
@@ -306,6 +275,7 @@ namespace PathFinding.ViewModels
                 NodesGraph.Add(new Node(_newNodeName));
                 NewNodeName = null;
             }
+            NodesGraph = NodesGraph;
         }
 
         public void RemoveNode()
@@ -318,6 +288,7 @@ namespace PathFinding.ViewModels
                 }
                 NodesGraph.Remove(SelectedNode);
             }
+            NodesGraph = NodesGraph;
         }
 
         public void AddNewConnection()
@@ -329,6 +300,8 @@ namespace PathFinding.ViewModels
             if (!NodesGraph.Any(n => n.NodeName == NewConnectionTargetName)) return;
             Node chosenNode = NodesGraph.First(n => n.NodeName == NewConnectionTargetName);
             SelectedNode.AddConnection(chosenNode, NewConnectionDistance, false);
+
+            NodesGraph = NodesGraph;
         }
 
         public void RemoveConnection()
@@ -336,6 +309,8 @@ namespace PathFinding.ViewModels
             if (SelectedNode == null) return;
             if (SelectedIndex >= SelectedNode.Connections.Count()) return;
             SelectedNode.Connections.RemoveAt(SelectedIndex);
+
+            NodesGraph = NodesGraph;
         }
 
         public void CalculateBellman()
@@ -353,6 +328,42 @@ namespace PathFinding.ViewModels
         public void OpenGraph()
         {
             Process.Start("C:/Users/Jack/Desktop/release/releaseee/gg.exe");
+        }
+
+        private void FillCanvasGraph()
+        {
+            if (NodesGraph.Count == 0) return;
+            int step = 360 / NodesGraph.Count;
+
+            var canvasGraph = new BindableCollection<NodeCoordinate>();
+            for (int i = 0; i < NodesGraph.Count; i++)
+            {
+                var coordinate = pov(new Coordinate(400, 400), 0 + step * i, 200);
+                canvasGraph.Add(new NodeCoordinate(NodesGraph[i], coordinate.X, coordinate.Y));
+            }
+            NodesGraphCoord = canvasGraph;
+        }
+
+        private void FillLinesData()
+        {
+            if (NodesGraphCoord.Count == 0) return;
+            var linesData = new BindableCollection<LineData>();
+            foreach (var node in NodesGraphCoord)
+            {
+                foreach (var connection in node.Node.Connections)
+                {
+                    var nodePoint1 = new Coordinate(node.X, node.Y);
+
+                    var targetNodeCoords = NodesGraphCoord.FirstOrDefault(n => n.Node.NodeName == connection.Target.NodeName);
+                    var nodePoint2 = new Coordinate(targetNodeCoords.X, targetNodeCoords.Y);
+                    var p1 = new Coordinate(nodePoint1.X , nodePoint1.Y);
+                    var p2 = new Coordinate(nodePoint2.X, nodePoint2.Y);
+
+                    linesData.Add(new LineData(nodePoint1, nodePoint2, connection.Distance));
+                }
+            }
+
+            LinesData = linesData;
         }
 
         public Coordinate pov(Coordinate p, int angle, int width)
@@ -399,6 +410,90 @@ namespace PathFinding.ViewModels
 
             return e;
         }
+
+        public Coordinate[] strelka(Coordinate p1, Coordinate p2)
+        {
+            //    int os = 10;
+            int kr = 15;
+            int kr_ang = 40;
+            int angle = 0;
+            int tochn = 5;
+            Coordinate dd;
+            for (int i = 0; i < 361; i++)
+            {
+                dd = pov(p2, i,dlina(p2, p1));
+                if (Math.Abs(p1.X- dd.X) < tochn && Math.Abs(p1.Y - dd.Y) < tochn)
+                    angle = i;
+            }
+            Coordinate kr1 = pov(p2, angle - kr_ang, kr);
+            Coordinate kr2 = pov(p2, angle + kr_ang, kr);
+
+            return new Coordinate[] { kr1, kr2 };
+        }
+
+        public int ArrowAngle(Coordinate p1, Coordinate p2)
+        {
+            int angle = 0;
+            int tochn = 20;
+            Coordinate dd;
+            for (int i = 0; i < 361; i++)
+            {
+                dd = pov(p2, i, dlina(p2, p1));
+                if (Math.Abs(p1.X - dd.X) < tochn && Math.Abs(p1.Y - dd.Y) < tochn)
+                    angle = i;
+            }
+            return angle;
+        }
+
+        public int orent(Coordinate p1, Coordinate p2)
+        {
+            if (p1.X == p2.X)
+            {
+                if (p1.Y > p2.Y)
+                    return 1;
+                if (p1.Y < p2.Y)
+                    return 5;
+            }
+            if (p1.Y == p2.Y)
+            {
+                if (p1.X > p2.X)
+                    return 7;
+                if (p1.X < p2.X)
+                    return 3;
+            }
+            if (p1.X > p2.X)
+            {
+                if (p1.Y > p2.Y)
+                    return 8;
+                if (p1.Y < p2.Y)
+                    return 6;
+            }
+            if (p1.X < p2.X)
+            {
+                if (p1.Y > p2.Y)
+                    return 2;
+                if (p1.Y < p2.Y)
+                    return 4;
+            }
+            return 0;
+        }
+
+        public int dlina(Coordinate p1, Coordinate p2)
+        {
+            switch (orent(p1, p2))
+            {
+                case 0: return 0;
+                case 1: return (int)(p1.Y - p2.Y);
+                case 2: return (int)(Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p1.Y - p2.Y, 2)));
+                case 3: return (int)(p2.X - p1.X);
+                case 4: return (int)(Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2)));
+                case 5: return (int)(p2.Y - p1.Y);
+                case 6: return (int)(Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p2.Y - p1.Y, 2)));
+                case 7: return (int)(p1.X - p2.X);
+                case 8: return (int)(Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2)));
+            }
+            return 0;
+        }
     }
 
     public class Coordinate
@@ -423,17 +518,31 @@ namespace PathFinding.ViewModels
         public double ConnectionDistance { get; set; }
         public Coordinate DistanceCoordinate { get; set; }
 
+        public Coordinate ArrowCoord { get; set; }
+        public double Angle { get; set; }
+        public Thickness ArrowOffset { get; set; }
 
         public LineData()
         {
                
         }
+
         public LineData(Coordinate point1, Coordinate point2, double distance)
         {
             Point1 = point1;
             Point2 = point2;
+
             ConnectionDistance = distance;
             DistanceCoordinate = new Coordinate((Point2.X + Point1.X) / 2, (Point2.Y +Point1.Y) /2);
+
+            // Arrow rotation
+            float xDiff = Point2.X - Point1.X;
+            float yDiff = Point2.Y - Point1.Y;
+            Angle = Math.Atan2(yDiff, xDiff) * 180.0 / Math.PI;
+
+            ArrowOffset = new Thickness(-16 / 2, -16 / 2, 0, 0);
+
+            ArrowCoord = new Coordinate((Point2.X + Point1.X -15) / 2, (Point2.Y + Point1.Y-15) / 2);
         }
 
     }

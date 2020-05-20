@@ -123,20 +123,20 @@
                 <DataGridTextColumn Header="Distance" Binding="{Binding Path=Distance}"/>
             </DataGrid.Columns>
         </DataGrid>
-
-        <Button Grid.Row ="18" Grid.Column="1" Grid.ColumnSpan="2"
-                x:Name="OpenGraph" Content="Draw"/>
+        
         <!--
         Canvas for Nodes
         -->
 
+        <!-- Connections -->
         <ItemsControl ItemsSource="{Binding LinesData}"
                 Grid.Row="2" Grid.Column="6" 
                 Grid.ColumnSpan="2" Grid.RowSpan="21">
 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas   Background="White"></Canvas>
+                    <Canvas   Background="White" Grid.Row="2" Grid.Column="6" 
+                Grid.ColumnSpan="2" Grid.RowSpan="21"></Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
@@ -146,22 +146,34 @@
                         <Grid>
                             <Line X1="{Binding Path=Point1.X}" Y1="{Binding Path=Point1.Y}"
                                   X2="{Binding Path=Point2.X}" Y2="{Binding Path=Point2.Y}"
-                                  Stroke="Black"
-                                  StrokeThickness="1"/>
+                                  Stroke="LightGray"
+                                  StrokeThickness="2"/>
+                            <!--
+                                <Line 
+                                  X2="{Binding Path=Point2.X}" Y2="{Binding Path=Point2.Y}"
+                                  X1="{Binding Path=Arrow1.X}" Y1="{Binding Path=Arrow1.Y}"
+                                  Stroke="LightGray"
+                                  StrokeThickness="2"/>
+                            <Line X2="{Binding Path=Point2.X}" Y2="{Binding Path=Point2.Y}"
+                                  X1="{Binding Path=Arrow2.X}" Y1="{Binding Path=Arrow2.Y}"
+                                  Stroke="LightGray"
+                                  StrokeThickness="2"/>-->
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
 
         </ItemsControl>
-
+        
+        <!-- Elipses -->
         <ItemsControl ItemsSource="{Binding NodesGraphCoord}"
                 Grid.Row="2" Grid.Column="6" 
                 Grid.ColumnSpan="2" Grid.RowSpan="21">
             
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas/>
+                    <Canvas Grid.Row="2" Grid.Column="6" 
+                Grid.ColumnSpan="2" Grid.RowSpan="21"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
@@ -169,10 +181,11 @@
                 <DataTemplate>
                     <StackPanel>
                         <Grid>
-                            <Ellipse Fill="Blue" Width="30" Height="30"
+                            <Ellipse Fill="LightBlue" Width="30" Height="30"
                                      Margin="{Binding Offset}" Opacity="1"/>
                             <TextBlock Text="{Binding Path=Node.NodeName}" Margin="{Binding Offset}"
-                                       FontWeight="Black" TextAlignment="Center"/>
+                                       FontWeight="UltraBlack" TextAlignment="Center"
+                                       FontSize="15"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
@@ -191,16 +204,16 @@
                 </Style>
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
-
         
-
+        <!-- Distances on lines -->
         <ItemsControl ItemsSource="{Binding LinesData}"
                 Grid.Row="2" Grid.Column="6" 
                 Grid.ColumnSpan="2" Grid.RowSpan="21">
 
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas />
+                    <Canvas Grid.Row="2" Grid.Column="6" 
+                Grid.ColumnSpan="2" Grid.RowSpan="21"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
@@ -209,7 +222,8 @@
                     <StackPanel>
                         <Grid>
                             <TextBlock Text="{Binding ConnectionDistance}" 
-                                       FontWeight="Black" TextAlignment="Center" />
+                                       FontWeight="Black" TextAlignment="Center" 
+                                       FontSize="15"/>
                         </Grid>
                     </StackPanel>
                 </DataTemplate>
@@ -224,6 +238,47 @@
                     <Setter
                         Property="Canvas.Top"
                         Value="{Binding Path=DistanceCoordinate.Y}"
+                        />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+        </ItemsControl>
+        
+        <!-- Arrows -->
+        <ItemsControl ItemsSource="{Binding LinesData}"
+                Grid.Row="2" Grid.Column="6" 
+                Grid.ColumnSpan="2" Grid.RowSpan="21">
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Grid.Row="2" Grid.Column="6" 
+                Grid.ColumnSpan="2" Grid.RowSpan="21"></Canvas>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Grid>
+                            <Path Stroke="Black" Data="M 0 4 L 16 4 L 10 0 M 16 4 L 10 8" Margin="{Binding ArrowOffset}">
+                                <Path.LayoutTransform>
+                                    <RotateTransform Angle="{Binding Angle}"></RotateTransform>
+                                </Path.LayoutTransform>
+                            </Path>
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter
+                        Property="Canvas.Left"
+                        Value="{Binding Path=ArrowCoord.X}"
+                        />
+                    <Setter
+                        Property="Canvas.Top"
+                        Value="{Binding Path=ArrowCoord.Y}"
                         />
                 </Style>
             </ItemsControl.ItemContainerStyle>
