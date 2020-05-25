@@ -16,5 +16,5 @@ D:\PathFinding\PF.UI\PathFinding\App.xaml
 197238456486
 Views\BellmanFordView.xaml;Views\DijkstrasView.xaml;Views\FloydWarshallView.xaml;Views\ShellView.xaml;
 
-True
+False
 

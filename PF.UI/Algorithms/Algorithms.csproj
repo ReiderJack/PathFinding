@@ -36,8 +36,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dijkstras\Coordinate.cs" />
     <Compile Include="Dijkstras\DistanceCalculator.cs" />
     <Compile Include="Dijkstras\Graph.cs" />
+    <Compile Include="Dijkstras\LineData.cs" />
     <Compile Include="Dijkstras\Node.cs" />
     <Compile Include="Dijkstras\NodeConnection.cs" />
     <Compile Include="Dijkstras\NodeCoordinate.cs" />

@@ -29,6 +29,8 @@ namespace PathFinding.ViewModels
                 }
                 _nodesGraph = value;
                 NotifyOfPropertyChange(() => NodesGraph);
+                FillCanvasGraph();
+                FillLinesData();
             }
         }
 
@@ -209,6 +211,7 @@ namespace PathFinding.ViewModels
                 NodesGraph.Add(new Node(_newNodeName));
                 NewNodeName = null;
             }
+            NodesGraph = NodesGraph;
         }
 
         public void RemoveNode()
@@ -221,6 +224,7 @@ namespace PathFinding.ViewModels
                 }
                 NodesGraph.Remove(SelectedNode);
             }
+            NodesGraph = NodesGraph;
         }
 
         public void AddNewConnection()
@@ -232,6 +236,7 @@ namespace PathFinding.ViewModels
             if (!NodesGraph.Any(n => n.NodeName == NewConnectionTargetName)) return;
             Node chosenNode = NodesGraph.First(n => n.NodeName == NewConnectionTargetName);
             SelectedNode.AddConnection(chosenNode, NewConnectionDistance, false);
+            NodesGraph = NodesGraph;
         }
 
         public void RemoveConnection()
@@ -239,6 +244,7 @@ namespace PathFinding.ViewModels
             if (SelectedNode == null) return;
             if (SelectedIndex >= SelectedNode.Connections.Count()) return;
             SelectedNode.Connections.RemoveAt(SelectedIndex);
+            NodesGraph = NodesGraph;
         }
 
         public void CalculateDijkstra()
@@ -249,6 +255,120 @@ namespace PathFinding.ViewModels
             var calculator = new DistanceCalculator();
 
             CalculationResult = (BindableCollection<Node>)calculator.CalculateDistancesDijkstra(newResultGraph, SelectedNode.NodeName);
+        }
+
+        private BindableCollection<NodeCoordinate> _nodesGraphCoord;
+
+        public BindableCollection<NodeCoordinate> NodesGraphCoord
+        {
+            get => _nodesGraphCoord;
+
+            set
+            {
+                if (_nodesGraphCoord == null)
+                {
+                    _nodesGraphCoord = new BindableCollection<NodeCoordinate>();
+                }
+                _nodesGraphCoord = value;
+                NotifyOfPropertyChange(() => NodesGraphCoord);
+            }
+        }
+
+        private BindableCollection<LineData> _linesData;
+
+        public BindableCollection<LineData> LinesData
+        {
+            get => _linesData;
+            set
+            {
+                if (_linesData == null)
+                {
+                    _linesData = new BindableCollection<LineData>();
+                }
+                _linesData = value;
+                NotifyOfPropertyChange(() => LinesData);
+            }
+        }
+
+        private void FillCanvasGraph()
+        {
+            if (NodesGraph.Count == 0) return;
+            int step = 360 / NodesGraph.Count;
+
+            var canvasGraph = new BindableCollection<NodeCoordinate>();
+            for (int i = 0; i < NodesGraph.Count; i++)
+            {
+                var coordinate = pov(new Coordinate(400, 400), 0 + step * i, 200);
+                canvasGraph.Add(new NodeCoordinate(NodesGraph[i], coordinate.X, coordinate.Y));
+            }
+            NodesGraphCoord = canvasGraph;
+        }
+
+        private void FillLinesData()
+        {
+            if (NodesGraphCoord.Count == 0) return;
+            var linesData = new BindableCollection<LineData>();
+            foreach (var node in NodesGraphCoord)
+            {
+                foreach (var connection in node.Node.Connections)
+                {
+                    var nodePoint1 = new Coordinate(node.X, node.Y);
+
+                    var targetNodeCoords = NodesGraphCoord.FirstOrDefault(n => n.Node.NodeName == connection.Target.NodeName);
+                    var nodePoint2 = new Coordinate(targetNodeCoords.X, targetNodeCoords.Y);
+                    var p1 = new Coordinate(nodePoint1.X, nodePoint1.Y);
+                    var p2 = new Coordinate(nodePoint2.X, nodePoint2.Y);
+
+                    linesData.Add(new LineData(nodePoint1, nodePoint2, connection.Distance));
+                }
+            }
+
+            LinesData = linesData;
+        }
+
+        public Coordinate pov(Coordinate p, int angle, int width)
+        {
+            int ang = 0;
+            while (angle < 0)
+                angle += 360;
+            angle = angle % 360;
+
+            Coordinate e = p;
+
+            if (angle >= 0 && angle <= 90)
+                ang = angle;
+            if (angle > 90 && angle <= 180)
+                ang = 180 - angle;
+            if (angle > 180 && angle <= 270)
+                ang = angle - 180;
+            if (angle > 270 && angle <= 360)
+                ang = 360 - angle;
+
+            double ax = Math.Sin(ang * 0.0175);
+            double ay = Math.Cos(ang * 0.0175);
+
+            if (angle >= 0 && angle <= 90)
+            {
+                e.X = (p.X + (int)(ax * width));
+                e.Y = (p.Y - (int)(ay * width));
+            }
+            if (angle > 90 && angle <= 180)
+            {
+                e.X = (p.X + (int)(ax * width));
+                e.Y = (p.Y + (int)(ay * width));
+            }
+            if (angle > 180 && angle <= 270)
+            {
+                e.X = (p.X - (int)(ax * width));
+                e.Y = (p.Y + (int)(ay * width));
+            }
+            if (angle > 270 && angle <= 360)
+            {
+                e.X = (p.X - (int)(ax * width));
+                e.Y = (p.Y - (int)(ay * width));
+            }
+
+            return e;
         }
     }
 }
