@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace Algorithms.Dijkstras
 {
+    /// <summary>
+    /// Используется только для теста
+    /// </summary>
     public class Graph
     {
+            
         public Dictionary<string, Node> Nodes { get; private set; }
 
         public Graph()
